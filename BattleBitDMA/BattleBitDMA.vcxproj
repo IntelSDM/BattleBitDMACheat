@@ -148,6 +148,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Memory\Memory.cpp" />
+    <ClCompile Include="Misc\CheatFunction.cpp" />
+    <ClCompile Include="Misc\Pch\Pch.cpp" />
+    <ClCompile Include="Misc\Vector.cpp" />
+    <ClCompile Include="SDK\PlayerNetwork.cpp" />
+    <ClCompile Include="SDK\PlayerNetworkState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Misc\CheatFunction.h" />
+    <ClInclude Include="Memory\Memory.h" />
+    <ClInclude Include="Misc\Pch\Pch.h" />
+    <ClInclude Include="Misc\Vector.h" />
+    <ClInclude Include="SDK\PlayerNetwork.h" />
+    <ClInclude Include="SDK\PlayerNetworkState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
