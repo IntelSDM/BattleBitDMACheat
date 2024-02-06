@@ -10,7 +10,8 @@ void main()
 		return;
 	}
 	TargetProcess.GetBaseAddress("GameAssembly.dll");
-	std::shared_ptr<PlayerNetwork> playernetwork = std::make_shared<PlayerNetwork>();
+	std::shared_ptr<PlayerNetwork> playernetwork = std::make_shared<PlayerNetwork>(0);
+	playernetwork->InitializePlayerList();
 	playernetwork->ItteratePlayers();
 
 }
