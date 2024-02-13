@@ -46,16 +46,10 @@ void PlayerNetwork::CachePlayers()
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
-	for (auto pair : PlayerList)
-	{
-		
-		pair.second->PlayerState = std::make_shared<PlayerNetworkState>(pair.second->NetworkState);
-	}
 	handle = TargetProcess.CreateScatterHandle();
 	for (auto pair : PlayerList)
 	{
-		pair.second->PlayerState->UpdateConnected(handle);
-		pair.second->PlayerState->UpdateHealth(handle);
+		pair.second->PlayerState = std::make_shared<PlayerNetworkState>(pair.second->NetworkState,handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
@@ -66,6 +60,8 @@ void PlayerNetwork::CachePlayers()
 	//	{
 		//	printf("Player: 0x%llX is connected\n", pair.first);
 			printf("Player: 0x%llX has health: %f\n", pair.first, pair.second->PlayerState->GetHealth());
+			printf("Player: 0x%llX is friendly: %d\n", pair.first, pair.second->PlayerState->GetFriendly());
+			printf("Player: 0x%llX is at position: %f %f %f\n", pair.first, pair.second->PlayerState->GetPosition().x, pair.second->PlayerState->GetPosition().y, pair.second->PlayerState->GetPosition().z);
 	//	}
 	}
 
