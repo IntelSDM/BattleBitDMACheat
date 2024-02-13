@@ -16,10 +16,11 @@ private:
     uint64_t NetworkState = 0x30; // public PlayerNetworkState
     std::shared_ptr<PlayerNetworkState> PlayerState;
     uint64_t LocalPlayer = 0x1C; // public bool
+
     bool IsLocalPlayer = false;
 public:
     PlayerNetwork(uint64_t address);
     void InitializePlayerList();
-    void ItteratePlayers();
+    void CachePlayers();
     std::map<uint64_t, std::shared_ptr<PlayerNetwork>> PlayerList;
 };

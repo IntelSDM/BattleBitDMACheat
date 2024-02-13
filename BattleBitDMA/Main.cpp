@@ -2,6 +2,11 @@
 #include "Memory.h"
 #include "CheatFunction.h"
 #include "PlayerNetwork.h"
+std::shared_ptr<PlayerNetwork> playernetwork = std::make_shared<PlayerNetwork>(0);
+std::shared_ptr<CheatFunction> cheatfunction = std::make_shared<CheatFunction>(1000, [] {
+	playernetwork->CachePlayers();
+	
+	});
 void main()
 {
 	if (!TargetProcess.Init("BattleBit.exe"))
@@ -10,9 +15,12 @@ void main()
 		return;
 	}
 	TargetProcess.GetBaseAddress("GameAssembly.dll");
-	std::shared_ptr<PlayerNetwork> playernetwork = std::make_shared<PlayerNetwork>(0);
+
 	playernetwork->InitializePlayerList();
-	playernetwork->ItteratePlayers();
+	while (true)
+	{
+		cheatfunction->Execute();
+	}
 
 }
 	

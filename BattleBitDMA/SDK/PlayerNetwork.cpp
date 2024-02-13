@@ -13,7 +13,7 @@ void PlayerNetwork::InitializePlayerList()
 	FastList = TargetProcess.Read<uint64_t>(StaticField + FastList);
 	printf("FastList: 0x%llX\n", FastList);
 }
-void PlayerNetwork::ItteratePlayers()
+void PlayerNetwork::CachePlayers()
 {
 	
 	auto handle = TargetProcess.CreateScatterHandle();
@@ -23,14 +23,13 @@ void PlayerNetwork::ItteratePlayers()
 	TargetProcess.AddScatterReadRequest(handle, FastList + 0x18, reinterpret_cast<void*>(&fastlistsize), sizeof(uint32_t));
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
-	printf("FastListSize: %d\n", fastlistsize);
 
 	std::vector<uint64_t> players;
 	players.resize(fastlistsize);
 	handle = TargetProcess.CreateScatterHandle();
 	for (int i = 0; i < fastlistsize; i++)
 	{
-		TargetProcess.AddScatterReadRequest(handle,fastlistbuffer + (i * 0x8), reinterpret_cast<void*>(&players[i]),sizeof(uint64_t));
+		TargetProcess.AddScatterReadRequest(handle,fastlistbuffer + (0x20 + (i * 0x8)), reinterpret_cast<void*>(&players[i]),sizeof(uint64_t));
 
 	}
 	TargetProcess.ExecuteReadScatter(handle);
@@ -49,8 +48,28 @@ void PlayerNetwork::ItteratePlayers()
 	TargetProcess.CloseScatterHandle(handle);
 	for (auto pair : PlayerList)
 	{
+		
 		pair.second->PlayerState = std::make_shared<PlayerNetworkState>(pair.second->NetworkState);
 	}
+	handle = TargetProcess.CreateScatterHandle();
+	for (auto pair : PlayerList)
+	{
+		pair.second->PlayerState->UpdateConnected(handle);
+		pair.second->PlayerState->UpdateHealth(handle);
+	}
+	TargetProcess.ExecuteReadScatter(handle);
+	TargetProcess.CloseScatterHandle(handle);
+
+	for (auto pair : PlayerList)
+	{//print if player is connected and health
+	//	if (pair.second->PlayerState->GetConnected())
+	//	{
+		//	printf("Player: 0x%llX is connected\n", pair.first);
+			printf("Player: 0x%llX has health: %f\n", pair.first, pair.second->PlayerState->GetHealth());
+	//	}
+	}
+
+
 
 
 }

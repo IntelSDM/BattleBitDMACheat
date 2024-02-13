@@ -326,6 +326,7 @@ size_t Memory::GetBaseAddress(std::string module_name)
 		}
 
 		LOG("[+] Found Base Address for %s at 0x%p\n", module_name.c_str(), module_info->vaBase);
+		Modules[str] = module_info->vaBase;
 		return module_info->vaBase;
 	}
 	else
