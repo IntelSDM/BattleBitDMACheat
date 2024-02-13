@@ -72,4 +72,10 @@ using json = nlohmann::json;
 #pragma comment(lib, "Dwrite")
 #pragma comment(lib, "windowscodecs.lib")
 #include "Vector.h"
+#include "Input.h"
+#include "Colour.h"
+#include "Graphics.h"
+#include "font.h"
+#include "XorStr.h"
 #include "Memory.h"
+#include "CheatFunction.h"

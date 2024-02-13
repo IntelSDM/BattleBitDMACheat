@@ -37,37 +37,33 @@ void PlayerNetwork::CachePlayers()
 	TargetProcess.CloseScatterHandle(handle);
 	for (int i = 0; i < fastlistsize; i++)
 	{
-		PlayerList[players[i]] = std::make_shared<PlayerNetwork>(players[i]);
+		PlayerList[i] = std::make_shared<PlayerNetwork>(players[i]);
 	}
 	handle = TargetProcess.CreateScatterHandle();
-	for (auto pair : PlayerList)
+	for (auto player : PlayerList)
 	{
-		TargetProcess.AddScatterReadRequest(handle, pair.second->Class + pair.second->NetworkState, reinterpret_cast<void*>(&pair.second->NetworkState), sizeof(uint64_t));
-		TargetProcess.AddScatterReadRequest(handle, pair.second->Class + pair.second->LocalPlayer, reinterpret_cast<void*>(&pair.second->IsLocalPlayer), sizeof(bool));
+		TargetProcess.AddScatterReadRequest(handle, player->Class + player->NetworkState, reinterpret_cast<void*>(&player->NetworkState), sizeof(uint64_t));
+		TargetProcess.AddScatterReadRequest(handle, player->Class + player->LocalPlayer, reinterpret_cast<void*>(&player->IsLocalPlayer), sizeof(bool));
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
 	handle = TargetProcess.CreateScatterHandle();
-	for (auto pair : PlayerList)
+	for (auto player : PlayerList)
 	{
-		if(pair.second->IsLocalPlayer)
-			CurrentLocalPlayer = pair.second;
+		if(player->IsLocalPlayer)
+			CurrentLocalPlayer = player;
 
-		pair.second->PlayerState = std::make_shared<PlayerNetworkState>(pair.second->NetworkState,handle);
+		player->PlayerState = std::make_shared<PlayerNetworkState>(player->NetworkState,handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
 
-	for (auto pair : PlayerList)
+	for (auto player : PlayerList)
 	{//print if player is connected and health
 	//	if (pair.second->PlayerState->GetConnected())
 	//	{
 		//	printf("Player: 0x%llX is connected\n", pair.first);
-			printf("Player: 0x%llX has health: %f\n", pair.first, pair.second->PlayerState->GetHealth());
-			printf("Player: 0x%llX is friendly: %d\n", pair.first, pair.second->PlayerState->GetFriendly());
-			printf("Player: 0x%llX is at position: %f %f %f\n", pair.first, pair.second->PlayerState->GetPosition().x, pair.second->PlayerState->GetPosition().y, pair.second->PlayerState->GetPosition().z);
-			Vector2 screenpos = Camera->WorldToScreen(pair.second->PlayerState->GetPosition());
-			printf("Player: 0x%llX is at screen position: %f %f\n", pair.first, screenpos.x, screenpos.y);
+		
 
 
 	//	}
