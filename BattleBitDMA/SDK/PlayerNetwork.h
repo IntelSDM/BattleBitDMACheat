@@ -22,5 +22,6 @@ public:
     PlayerNetwork(uint64_t address);
     void InitializePlayerList();
     void CachePlayers();
+    std::shared_ptr<PlayerNetworkState> GetPlayerNettworkState();
     std::vector<std::shared_ptr<PlayerNetwork>> PlayerList;
 };

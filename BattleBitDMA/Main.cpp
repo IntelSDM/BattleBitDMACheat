@@ -6,34 +6,9 @@
 #include "MainCamera.h"
 #include "Init.h"
 #include "GUI.h"
-std::shared_ptr<PlayerNetwork> Player;
-std::shared_ptr<MainCamera> Camera;
-std::shared_ptr<PlayerNetwork> CurrentLocalPlayer;
 
-std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(1000, [] {
-	Player->CachePlayers();
-	
-	});
 
-void InitialiseClasses()
-{
-	Player = std::make_shared<PlayerNetwork>(0);
-	Camera = std::make_shared<MainCamera>();
-	Player->InitializePlayerList();
-}
-void Caching()
-{
-	while (true)
-	{
-		if (Player == nullptr || Player->PlayerList.size() == 0)
-		{
-			InitialiseClasses();
-			Sleep(2000);
-		}
 
-		Cache->Execute();
-	}
-}
 void main()
 {
 	if (!TargetProcess.Init("BattleBit.exe"))
@@ -42,10 +17,6 @@ void main()
 		return;
 	}
 	TargetProcess.GetBaseAddress("GameAssembly.dll");
-	InitialiseClasses();
-	
-	
-
 }
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -103,9 +74,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 	SetProcessDPIAware();
 	SetInput();
-	std::thread cachingthread;
-	cachingthread = std::thread(Caching);
-	cachingthread.detach();
 	while (TRUE)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))

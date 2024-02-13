@@ -35,6 +35,7 @@ void PlayerNetwork::CachePlayers()
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
+	PlayerList.resize(fastlistsize);
 	for (int i = 0; i < fastlistsize; i++)
 	{
 		PlayerList[i] = std::make_shared<PlayerNetwork>(players[i]);
@@ -69,7 +70,9 @@ void PlayerNetwork::CachePlayers()
 	//	}
 	}
 
+}
 
-
-
+std::shared_ptr<PlayerNetworkState> PlayerNetwork::GetPlayerNettworkState()
+{
+	return PlayerState;
 }
