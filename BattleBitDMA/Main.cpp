@@ -2,11 +2,24 @@
 #include "Memory.h"
 #include "CheatFunction.h"
 #include "PlayerNetwork.h"
-std::shared_ptr<PlayerNetwork> playernetwork = std::make_shared<PlayerNetwork>(0);
-std::shared_ptr<CheatFunction> cheatfunction = std::make_shared<CheatFunction>(1000, [] {
-	playernetwork->CachePlayers();
+#include "Globals.h"
+#include "MainCamera.h"
+std::shared_ptr<PlayerNetwork> Player ;
+std::shared_ptr<MainCamera> Camera ;
+std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(1000, [] {
+	Player->CachePlayers();
 	
 	});
+std::shared_ptr<CheatFunction> UpdateCamera = std::make_shared<CheatFunction>(100, [] {
+	Camera->UpdateViewMatrix();
+
+	});
+std::shared_ptr<PlayerNetwork> CurrentLocalPlayer;
+void InitialiseClasses()
+{
+	Player = std::make_shared<PlayerNetwork>(0);
+	Camera = std::make_shared<MainCamera>();
+}
 void main()
 {
 	if (!TargetProcess.Init("BattleBit.exe"))
@@ -15,11 +28,12 @@ void main()
 		return;
 	}
 	TargetProcess.GetBaseAddress("GameAssembly.dll");
-
-	playernetwork->InitializePlayerList();
+	InitialiseClasses();
+	Player->InitializePlayerList();
 	while (true)
 	{
-		cheatfunction->Execute();
+		Cache->Execute();
+		UpdateCamera->Execute();
 	}
 
 }

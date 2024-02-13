@@ -1,5 +1,6 @@
 #include "Pch.h"
 #include "PlayerNetwork.h"
+#include "globals.h"
 
 PlayerNetwork::PlayerNetwork(uint64_t address)
 {
@@ -49,6 +50,9 @@ void PlayerNetwork::CachePlayers()
 	handle = TargetProcess.CreateScatterHandle();
 	for (auto pair : PlayerList)
 	{
+		if(pair.second->IsLocalPlayer)
+			CurrentLocalPlayer = pair.second;
+
 		pair.second->PlayerState = std::make_shared<PlayerNetworkState>(pair.second->NetworkState,handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);

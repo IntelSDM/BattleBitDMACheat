@@ -152,14 +152,17 @@
     <ClCompile Include="Misc\CheatFunction.cpp" />
     <ClCompile Include="Misc\Pch\Pch.cpp" />
     <ClCompile Include="Misc\Vector.cpp" />
+    <ClCompile Include="SDK\MainCamera.cpp" />
     <ClCompile Include="SDK\PlayerNetwork.cpp" />
     <ClCompile Include="SDK\PlayerNetworkState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Misc\CheatFunction.h" />
     <ClInclude Include="Memory\Memory.h" />
     <ClInclude Include="Misc\Pch\Pch.h" />
     <ClInclude Include="Misc\Vector.h" />
+    <ClInclude Include="SDK\MainCamera.h" />
     <ClInclude Include="SDK\PlayerNetwork.h" />
     <ClInclude Include="SDK\PlayerNetworkState.h" />
   </ItemGroup>
