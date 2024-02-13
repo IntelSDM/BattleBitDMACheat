@@ -58,17 +58,23 @@ void PlayerNetwork::CachePlayers()
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
-
+	handle = TargetProcess.CreateScatterHandle();
 	for (auto player : PlayerList)
-	{//print if player is connected and health
-	//	if (pair.second->PlayerState->GetConnected())
-	//	{
-		//	printf("Player: 0x%llX is connected\n", pair.first);
-		
-
-
-	//	}
+	{
+		player->PlayerState->UpdateWeapons(handle);
+	
 	}
+	TargetProcess.ExecuteReadScatter(handle);
+	TargetProcess.CloseScatterHandle(handle);
+
+	handle = TargetProcess.CreateScatterHandle();
+	for (auto player : PlayerList)
+	{
+		player->PlayerState->UpdateWeapons1(handle);
+
+	}
+	TargetProcess.ExecuteReadScatter(handle);
+	TargetProcess.CloseScatterHandle(handle);
 
 }
 

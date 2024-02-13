@@ -9,8 +9,28 @@ PlayerNetworkState::PlayerNetworkState(uint64_t address, VMMDLL_SCATTER_HANDLE h
 	UpdateHealth(handle);
 	UpdateFriendly(handle);
 	UpdatePosition(handle);
+	UpdatePrimaryWeapon(handle);
+	UpdateSecondaryWeapon(handle);
+}
+void PlayerNetworkState::UpdateWeapons(VMMDLL_SCATTER_HANDLE handle)
+{
+	UpdatePrimaryCacheName(handle);
+	UpdateSecondaryCacheName(handle);
+}
+void PlayerNetworkState::UpdateWeapons1(VMMDLL_SCATTER_HANDLE handle)
+{
+	UpdatePrimaryWeaponName(handle);
+	UpdateSecondaryWeaponName(handle);
 }
 
+void PlayerNetworkState::UpdatePrimaryCacheName(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, PrimaryWeapon + CacheName, reinterpret_cast<void*>(&PrimaryCacheName), sizeof(PrimaryCacheName));
+}
+void PlayerNetworkState::UpdateSecondaryCacheName(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, SecondaryWeapon + CacheName, reinterpret_cast<void*>(&SecondaryCacheName), sizeof(SecondaryCacheName));
+}
 void PlayerNetworkState::UpdateConnected(VMMDLL_SCATTER_HANDLE handle)
 {
 	TargetProcess.AddScatterReadRequest(handle,Class + Connected,reinterpret_cast<void*>(&IsConnected),sizeof(bool));
@@ -31,6 +51,26 @@ void PlayerNetworkState::UpdatePosition(VMMDLL_SCATTER_HANDLE handle)
 	TargetProcess.AddScatterReadRequest(handle, Class + PositionOffset, reinterpret_cast<void*>(&Position), sizeof(Vector3));
 }
 
+void PlayerNetworkState::UpdatePrimaryWeapon(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, Class + PrimaryWeapon, reinterpret_cast<void*>(&PrimaryWeapon), sizeof(PrimaryWeapon));
+}
+
+void PlayerNetworkState::UpdateSecondaryWeapon(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, Class + SecondaryWeapon, reinterpret_cast<void*>(&SecondaryWeapon), sizeof(PrimaryWeapon));
+}
+
+void PlayerNetworkState::UpdatePrimaryWeaponName(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, PrimaryCacheName + 0x14, reinterpret_cast<void*>(&PrimaryWeaponName), sizeof(PrimaryWeaponName));
+}
+
+void PlayerNetworkState::UpdateSecondaryWeaponName(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, SecondaryCacheName + 0x14, reinterpret_cast<void*>(&SecondaryWeaponName), sizeof(SecondaryWeaponName));
+}
+
 float PlayerNetworkState::GetHealth()
 {
 	return CurrentHealth;
@@ -49,4 +89,14 @@ bool PlayerNetworkState::GetFriendly()
 Vector3 PlayerNetworkState::GetPosition()
 {
 	return Position;
+}
+
+std::wstring PlayerNetworkState::GetPrimaryWeaponName()
+{
+	return std::wstring(PrimaryWeaponName);
+}
+
+std::wstring PlayerNetworkState::GetSecondaryWeaponName()
+{
+	return std::wstring(SecondaryWeaponName);
 }
