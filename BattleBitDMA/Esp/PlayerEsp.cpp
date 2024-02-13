@@ -4,7 +4,7 @@
 #include "CheatFunction.h"
 #include "Drawing.h"
 
-std::shared_ptr<CheatFunction> UpdatePlayers = std::make_shared<CheatFunction>(1, [] {
+std::shared_ptr<CheatFunction> UpdatePlayers = std::make_shared<CheatFunction>(10, [] {
 	auto handle = TargetProcess.CreateScatterHandle();
 	for (auto player : BasePlayer->PlayerList)
 	{
@@ -25,7 +25,8 @@ std::shared_ptr<CheatFunction> UpdatePlayers = std::make_shared<CheatFunction>(1
 
 
 
-std::shared_ptr<CheatFunction> DrawPlayers = std::make_shared<CheatFunction>(0, [] {
+void DrawPlayers()
+{
 
 	for (auto player : BasePlayer->PlayerList)
 	{
@@ -39,7 +40,7 @@ std::shared_ptr<CheatFunction> DrawPlayers = std::make_shared<CheatFunction>(0, 
 
 		Vector3 position = player->GetPlayerNettworkState()->GetPosition();
 		Vector2 screenpos = Camera->WorldToScreen(position);
-		if(screenpos == Vector2::Zero())
+		if (screenpos == Vector2::Zero())
 			continue;
 
 
@@ -48,4 +49,4 @@ std::shared_ptr<CheatFunction> DrawPlayers = std::make_shared<CheatFunction>(0, 
 		DrawText(screenpos.x, screenpos.y, LIT(L"Player"), "Verdana", 11, Colour(255, 255, 255, 255), FontAlignment::Centre);
 	}
 
-	});
+}

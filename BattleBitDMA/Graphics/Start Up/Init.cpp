@@ -33,7 +33,7 @@ void InitD2D(HWND hWnd)
 	RenderTarget->CreateSolidColorBrush(D2D1::ColorF(0, 0, 0, 0), &Brush); // create global brush
 	RenderTarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE); // set aa mode
 }
-std::shared_ptr<CheatFunction> UpdateViewMatrix = std::make_shared<CheatFunction>(1, []() {
+std::shared_ptr<CheatFunction> UpdateViewMatrix = std::make_shared<CheatFunction>(5, []() {
 	Camera->UpdateViewMatrix();
 	});
 
@@ -95,7 +95,7 @@ void InitialiseClasses()
 	BasePlayer->InitializePlayerList();
 }
 
-std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(10000, [] {
+std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(1000, [] {
 	BasePlayer->CachePlayers();
 
 	});
@@ -121,7 +121,7 @@ void RenderFrame()
 	RenderTarget->BeginDraw();
 	RenderTarget->Clear(Colour(0, 0, 0, 255)); // clear over the last buffer
 	RenderTarget->SetTransform(D2D1::Matrix3x2F::Identity()); // set new transform
-	DrawPlayers->Execute();
+	DrawPlayers();
 	Render();
 	RenderTarget->EndDraw();
 }
