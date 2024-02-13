@@ -4,8 +4,8 @@
 #include "PlayerNetwork.h"
 #include "Globals.h"
 #include "MainCamera.h"
-std::shared_ptr<PlayerNetwork> Player ;
-std::shared_ptr<MainCamera> Camera ;
+std::shared_ptr<PlayerNetwork> Player;
+std::shared_ptr<MainCamera> Camera;
 std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(1000, [] {
 	Player->CachePlayers();
 	
