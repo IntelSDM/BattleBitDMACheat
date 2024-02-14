@@ -71,10 +71,10 @@ void PlayerNetwork::CachePlayers()
 	for (auto player : PlayerList)
 	{
 		player->PlayerState->UpdateWeapons1(handle);
-
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
+
 
 }
 

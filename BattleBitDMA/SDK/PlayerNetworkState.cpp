@@ -11,7 +11,10 @@ PlayerNetworkState::PlayerNetworkState(uint64_t address, VMMDLL_SCATTER_HANDLE h
 	UpdatePosition(handle);
 	UpdatePrimaryWeapon(handle);
 	UpdateSecondaryWeapon(handle);
+	UpdateHitboxes(handle);
 }
+
+
 void PlayerNetworkState::UpdateWeapons(VMMDLL_SCATTER_HANDLE handle)
 {
 	UpdatePrimaryCacheName(handle);
@@ -26,6 +29,10 @@ void PlayerNetworkState::UpdateWeapons1(VMMDLL_SCATTER_HANDLE handle)
 void PlayerNetworkState::UpdatePrimaryCacheName(VMMDLL_SCATTER_HANDLE handle)
 {
 	TargetProcess.AddScatterReadRequest(handle, PrimaryWeapon + CacheName, reinterpret_cast<void*>(&PrimaryCacheName), sizeof(PrimaryCacheName));
+}
+void PlayerNetworkState::UpdateHitboxes(VMMDLL_SCATTER_HANDLE handle)
+{
+	TargetProcess.AddScatterReadRequest(handle, Class + Hitboxes, reinterpret_cast<void*>(&Hitboxes), sizeof(Hitboxes));
 }
 void PlayerNetworkState::UpdateSecondaryCacheName(VMMDLL_SCATTER_HANDLE handle)
 {
