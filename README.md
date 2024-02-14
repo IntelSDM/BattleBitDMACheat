@@ -10,6 +10,9 @@
     style="width: 35%;" />
 </p>
 
+## Instructions
+* [Installation Guide](./Instructions.md)
+
 ## Features
 * Player Esp
 * Player Distance
