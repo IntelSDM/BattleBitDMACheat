@@ -7,10 +7,10 @@ std::map<std::string, MyColour> MenuColours =
     {"Background", MyColour(20, 20, 20, 255)},
     {"Outline", MyColour(140, 140, 140, 255)},
     {"Header", MyColour(30, 30, 30, 255)},
-    {"HeaderSeperator", MyColour(0, 255, 150, 255)},
+    {"HeaderSeperator", MyColour(0, 150, 255, 255)},
     {"Text", MyColour(240, 240, 240, 255)},
-    {"TextSelected", MyColour(0, 255, 150, 255)},
-      {"TextHover", MyColour(0, 255, 150, 255)},
+    {"TextSelected", MyColour(0, 150, 255, 255)},
+      {"TextHover", MyColour(0, 255, 0, 255)},
 
     {"Button", MyColour(80, 80, 80, 255)},
     {"ButtonHover", MyColour(100, 100, 100, 255)},
@@ -36,7 +36,7 @@ std::map<std::string, MyColour> MenuColours =
     {"KeybindOutline", MyColour(130, 130, 130, 255)},
 
     {"Slider", MyColour(80, 80, 80, 255)},
-    {"SliderInside", MyColour(0, 255, 150, 255)},
+    {"SliderInside", MyColour(0, 150, 255, 255)},
      {"SliderOutline", MyColour(20, 20, 20, 255)},
      {"SliderWidget", MyColour(255, 255, 255, 255)},
 
@@ -53,7 +53,7 @@ std::map<std::string, MyColour> MenuColours =
 
     {"Toggle", MyColour(80, 80, 80, 255)},
     {"ToggleOutline", MyColour(130, 130, 130, 255)},
-    {"ToggleInside", MyColour(0, 255, 150, 255)},
+    {"ToggleInside", MyColour(0, 150, 255, 255)},
 
     //{"CheckboxHover", MyColour(100, 100, 100, 255)},
     //{"CheckboxActive", MyColour(120, 120, 120, 255)},
