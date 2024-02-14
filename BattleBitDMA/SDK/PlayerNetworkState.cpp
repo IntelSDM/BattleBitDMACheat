@@ -75,7 +75,11 @@ void PlayerNetworkState::UpdatePrimaryWeaponName(VMMDLL_SCATTER_HANDLE handle)
 
 void PlayerNetworkState::UpdateSecondaryWeaponName(VMMDLL_SCATTER_HANDLE handle)
 {
-	TargetProcess.AddScatterReadRequest(handle, SecondaryCacheName + 0x14, reinterpret_cast<void*>(&SecondaryWeaponName), sizeof(SecondaryWeaponName));
+	try // for some reason the &secondaryweapon causes an issue but i can do it to primaryweapon and this exact set of code works everywhere else
+	{
+		TargetProcess.AddScatterReadRequest(handle, Class + SecondaryWeapon, reinterpret_cast<void*>(&SecondaryWeapon), sizeof(uint64_t));
+	}
+	catch(std::exception ex){}
 }
 
 float PlayerNetworkState::GetHealth()
