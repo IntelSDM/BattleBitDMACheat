@@ -1,5 +1,6 @@
 # BattleBitDMACheat
 
+_Video has been copyright striked_<br>
 <a href="https://youtu.be/M43x70ikBl0">
   <img src="https://github.com/IntelSDM/BattleBitDMACheat/assets/86087830/e1c5b3fa-a4e4-4329-8362-27ea7a5590aa" alt="Play Video" width="700" height="400">
 </a>
